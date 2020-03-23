@@ -49,7 +49,7 @@ npm i --save alphasights-react-d3-tree
 ## Usage
 ```jsx
 import React from 'react';
-import Tree from 'react-d3-tree';
+import Tree from 'alphasights-react-d3-tree';
 
 const myTreeData = [
   {
