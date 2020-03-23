@@ -35,7 +35,7 @@ class Tree extends React.Component {
       derivedState = {
         // eslint-disable-next-line react/no-unused-state
         dataRef: nextProps.data,
-        data: Tree.assignInternalProperties(clone(nextProps.data)),
+        data: Tree.assignInternalProperties(clone({ type: 'hidden', children: nextProps.data })),
       };
     }
 
