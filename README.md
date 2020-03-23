@@ -7,13 +7,18 @@
 [![npm version](https://badge.fury.io/js/react-d3-tree.svg)](https://badge.fury.io/js/react-d3-tree)
 [![npm](https://img.shields.io/npm/dm/react-d3-tree.svg)](https://www.npmjs.com/package/react-d3-tree)
 
-React D3 Tree is a [React](http://facebook.github.io/react/) component that lets you represent hierarchical data (e.g. ancestor trees, organisational structure, package dependencies) as an animated & interactive tree graph by leveraging [D3](https://d3js.org/)'s `tree` layout.
-
+Modified React D3 Tree by [bkrem/react-d3-tree](https://github.com/alphasights/react-d3-tree), this custom AlphaSights React D3 Tree is used for displaying Hierarchies. The original [React](http://facebook.github.io/react/) D3 component lets you represent hierarchical data (e.g. ancestor trees, organisational structure, package dependencies) as an animated & interactive tree graph by leveraging [D3](https://d3js.org/)'s `tree` layout. This customized version supports:
+- Inverted trees and sub-trees.
+- Hidden nodes
+- Link styles specified on a source-target basis
+- Hidden links
 
 ## Contents <!-- omit in toc -->
-- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Hiding nodes](#hiding-nodes)
+  - [Custom link styles](#custom-link-styles)
+  - [Inverted trees](#inverted-trees)
 - [Props](#props)
 - [Node shapes](#node-shapes)
   - [Overridable `shapeProps`](#overridable-shapeprops)
@@ -30,9 +35,6 @@ React D3 Tree is a [React](http://facebook.github.io/react/) component that lets
     - [Auto-centering inside `treeContainer`](#auto-centering-inside-treecontainer)
     - [Adding & removing nodes dynamically](#adding--removing-nodes-dynamically)
 
-
-## Demo
-- Current release: https://bkrem.github.io/react-d3-tree-demo/
 
 
 ## Installation
@@ -87,6 +89,143 @@ class MyComponent extends React.Component {
 }
 ```
 
+### Hiding nodes
+Set the node type to `hidden`:
+
+```
+const myTreeData = [
+  {
+    name: 'Top Level',
+    attributes: {
+      keyA: 'val A',
+      keyB: 'val B',
+      keyC: 'val C',
+    },
+    children: [
+      {
+        name: 'Level 2: A',
+        attributes: {
+          keyA: 'val A',
+          keyB: 'val B',
+          keyC: 'val C',
+        },
+      },
+      {
+        name: 'Level 2: B',
+      },
+    ],
+  },
+];
+```
+
+### Custom link styles
+Use the `linkStyle` attribute:
+
+```
+const myTreeData = [
+  {
+    type: 'hidden',
+    children: [
+      {
+        name: 'Top Level 1',
+        linkStyle: {
+          stroke: "#ff6602",
+          "stroke-dasharray": 4
+        },
+        attributes: {
+          keyA: 'val A',
+          keyB: 'val B',
+          keyC: 'val C',
+        },
+        children: [
+          {
+            name: 'Level 2: A',
+            attributes: {
+              keyA: 'val A',
+              keyB: 'val B',
+              keyC: 'val C',
+            },
+          },
+          {
+            name: 'Level 2: B',
+          },
+        ],
+      },
+      {
+        name: 'Top Level 2',
+        children: [
+          {
+            name: 'Level 2: A',
+            attributes: {
+              keyA: 'val A',
+              keyB: 'val B',
+              keyC: 'val C',
+            },
+          },
+          {
+            name: 'Level 2: B',
+          },
+        ],
+      },
+    ]
+  }
+];
+```
+
+### Inverted trees
+To create inverted sub-trees, set the `inverted` attribute to `true`:
+
+```
+const myTreeData = [
+  {
+    name: "My root",
+    inverted: true,
+    children: [
+      {
+        name: 'Top Level 1',
+        linkStyle: {
+          stroke: "#ff6602",
+          "stroke-dasharray": 4
+        },
+        attributes: {
+          keyA: 'val A',
+          keyB: 'val B',
+          keyC: 'val C',
+        },
+        children: [
+          {
+            name: 'Level 2: A',
+            attributes: {
+              keyA: 'val A',
+              keyB: 'val B',
+              keyC: 'val C',
+            },
+          },
+          {
+            name: 'Level 2: B',
+          },
+        ],
+      },
+      {
+        name: 'Top Level 2',
+        children: [
+          {
+            name: 'Level 2: A',
+            attributes: {
+              keyA: 'val A',
+              keyB: 'val B',
+              keyC: 'val C',
+            },
+          },
+          {
+            name: 'Level 2: B',
+          },
+        ],
+      },
+    ]
+  }
+];
+```
 
 ## Props
 | Property                      | Type                   | Options                                                                                | Required? | Default                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |

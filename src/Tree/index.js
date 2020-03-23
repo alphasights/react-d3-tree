@@ -15,7 +15,7 @@ class Tree extends React.Component {
   state = {
     // eslint-disable-next-line react/no-unused-state
     dataRef: this.props.data,
-    data: Tree.assignInternalProperties(clone(this.props.data)),
+    data: Tree.assignInternalProperties(clone({ type: 'hidden', children: this.props.data })),
     d3: Tree.calculateD3Geometry(this.props),
     rd3tSvgClassName: `_${uuid.v4()}`,
     rd3tGClassName: `_${uuid.v4()}`,
@@ -452,7 +452,34 @@ class Tree extends React.Component {
     }
 
     const links = tree.links(nodes);
+
+    let xDiff = 0;
+    nodes.forEach(n => {
+      if (n.inverted) {
+        n.y *= -1;
+        const newX = n.parent.children.filter(child => !child.inverted)[0].x;
+        xDiff = newX;
+        n.x = newX;
+      } else if (this.isChildOf(n, 'inverted', true)) {
+        n.y *= -2;
+        n.x += xDiff;
+      }
+    });
+
     return { nodes, links };
+  }
+
+  isChildOf(node, nodeAttr, nodeValue) {
+    if (!node.parent) {
+      return false;
+    }
+
+    if (node[nodeAttr] === nodeValue) {
+      return true;
+    }
+
+    const ret = this.isChildOf(node.parent, nodeAttr, nodeValue);
+    return ret;
   }
 
   /**

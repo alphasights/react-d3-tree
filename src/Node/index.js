@@ -104,6 +104,7 @@ export default class Node extends React.Component {
   render() {
     const { nodeData, nodeSize, nodeLabelComponent, allowForeignObjects, styles } = this.props;
     const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
+
     return (
       <g
         id={nodeData.id}
@@ -117,9 +118,9 @@ export default class Node extends React.Component {
         onMouseOver={this.handleOnMouseOver}
         onMouseOut={this.handleOnMouseOut}
       >
-        {this.renderNodeElement(nodeStyle)}
+        {nodeData.type !== 'hidden' && this.renderNodeElement(nodeStyle)}
 
-        {allowForeignObjects && nodeLabelComponent ? (
+        {nodeData.type !== 'hidden' && allowForeignObjects && nodeLabelComponent ? (
           <ForeignObjectElement nodeData={nodeData} nodeSize={nodeSize} {...nodeLabelComponent} />
         ) : (
           <SvgTextElement {...this.props} nodeStyle={nodeStyle} />

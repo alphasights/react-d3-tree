@@ -111,13 +111,17 @@ export default class Link extends React.PureComponent {
   };
 
   render() {
-    const { styles } = this.props;
+    const { styles, linkData } = this.props;
+    if (linkData.source.type === 'hidden' || linkData.target.type === 'hidden') {
+      return null;
+    }
+    const linkStyles = { ...this.state.initialStyle, ...styles, ...linkData.source.linkStyle };
     return (
       <path
         ref={l => {
           this.link = l;
         }}
-        style={{ ...this.state.initialStyle, ...styles }}
+        style={linkStyles}
         className="linkBase"
         d={this.drawPath()}
         onClick={this.handleOnClick}
