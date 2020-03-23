@@ -39,11 +39,11 @@ Modified React D3 Tree by [bkrem/react-d3-tree](https://github.com/alphasights/r
 
 ## Installation
 ```bash
-yarn add react-d3-tree
+yarn add alphasights-react-d3-tree --ignore-engines
 ```
 or
 ```bash
-npm i --save react-d3-tree
+npm i --save alphasights-react-d3-tree
 ```
 
 ## Usage
