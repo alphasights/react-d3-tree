@@ -106,26 +106,28 @@ export default class Node extends React.Component {
     const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
 
     return (
-      <g
-        id={nodeData.id}
-        ref={n => {
-          this.node = n;
-        }}
-        style={this.state.initialStyle}
-        className={nodeData._children ? 'nodeBase' : 'leafNodeBase'}
-        transform={this.state.transform}
-        onClick={this.handleOnClick}
-        onMouseOver={this.handleOnMouseOver}
-        onMouseOut={this.handleOnMouseOut}
-      >
-        {nodeData.type !== 'hidden' && this.renderNodeElement(nodeStyle)}
+      nodeData.type !== 'hidden' && (
+        <g
+          id={nodeData.id}
+          ref={n => {
+            this.node = n;
+          }}
+          style={this.state.initialStyle}
+          className={nodeData._children ? 'nodeBase' : 'leafNodeBase'}
+          transform={this.state.transform}
+          onClick={this.handleOnClick}
+          onMouseOver={this.handleOnMouseOver}
+          onMouseOut={this.handleOnMouseOut}
+        >
+          {this.renderNodeElement(nodeStyle)}
 
-        {nodeData.type !== 'hidden' && allowForeignObjects && nodeLabelComponent ? (
-          <ForeignObjectElement nodeData={nodeData} nodeSize={nodeSize} {...nodeLabelComponent} />
-        ) : (
-          <SvgTextElement {...this.props} nodeStyle={nodeStyle} />
-        )}
-      </g>
+          {allowForeignObjects && nodeLabelComponent ? (
+            <ForeignObjectElement nodeData={nodeData} nodeSize={nodeSize} {...nodeLabelComponent} />
+          ) : (
+            <SvgTextElement {...this.props} nodeStyle={nodeStyle} />
+          )}
+        </g>
+      )
     );
   }
 }
