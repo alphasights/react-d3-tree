@@ -104,7 +104,6 @@ export default class Node extends React.Component {
   render() {
     const { nodeData, nodeSize, nodeLabelComponent, allowForeignObjects, styles } = this.props;
     const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
-
     return (
       nodeData.type !== 'hidden' && (
         <g

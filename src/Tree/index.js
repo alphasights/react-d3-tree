@@ -457,9 +457,12 @@ class Tree extends React.Component {
     nodes.forEach(n => {
       if (n.inverted) {
         n.y *= -1;
-        const newX = n.parent.children.filter(child => !child.inverted)[0].x;
-        xDiff = newX;
-        n.x = newX;
+        const notInvertedNodes = n.parent.children.filter(child => !child.inverted);
+        if (notInvertedNodes.length > 0) {
+          const newX = notInvertedNodes[0].x;
+          xDiff = newX;
+          n.x = newX;
+        }
       } else if (this.isChildOf(n, 'inverted', true)) {
         n.y *= -2;
         n.x += xDiff;
