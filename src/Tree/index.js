@@ -259,9 +259,13 @@ class Tree extends React.Component {
    *
    * @param {object} evt Event
    *
+   * @param {boolean} isDoubleClick True if the node was double-clicked; false if not.
+   *
    * @return {void}
    */
-  handleNodeToggle = (nodeId, evt) => {
+  handleNodeToggle = (nodeId, evt, isDoubleClick = false) => {
+    if (this.props.collapseOnDoubleClick && !isDoubleClick) return;
+
     const data = clone(this.state.data);
     const matches = this.findNodesById(nodeId, data, []);
     const targetNode = matches[0];
@@ -604,6 +608,7 @@ Tree.defaultProps = {
   transitionDuration: 500,
   depthFactor: undefined,
   collapsible: true,
+  collapseOnDoubleClick: true,
   useCollapseData: false,
   initialDepth: undefined,
   zoomable: true,
@@ -646,6 +651,7 @@ Tree.propTypes = {
   transitionDuration: T.number,
   depthFactor: T.number,
   collapsible: T.bool,
+  collapseOnDoubleClick: T.bool,
   useCollapseData: T.bool,
   initialDepth: T.number,
   zoomable: T.bool,

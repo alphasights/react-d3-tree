@@ -18,6 +18,12 @@ type: `number`
 defaultValue: `undefined`
 
 
+### `collapseOnDoubleClick`
+
+type: `bool`
+defaultValue: `true`
+
+
 ### `collapsible`
 
 type: `bool`

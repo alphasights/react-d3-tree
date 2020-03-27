@@ -84,7 +84,11 @@ export default class Node extends React.Component {
   };
 
   handleOnClick = evt => {
-    this.props.onClick(this.props.nodeData.id, evt);
+    this.props.onClick(this.props.nodeData.id, evt, false);
+  };
+
+  handleOnDoubleClick = evt => {
+    this.props.onClick(this.props.nodeData.id, evt, true);
   };
 
   handleOnMouseOver = evt => {
@@ -115,6 +119,7 @@ export default class Node extends React.Component {
           className={nodeData._children ? 'nodeBase' : 'leafNodeBase'}
           transform={this.state.transform}
           onClick={this.handleOnClick}
+          onDoubleClick={this.handleOnDoubleClick}
           onMouseOver={this.handleOnMouseOver}
           onMouseOut={this.handleOnMouseOut}
         >
