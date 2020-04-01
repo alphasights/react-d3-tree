@@ -1,6 +1,6 @@
 {
   "name": "alphasights-react-d3-tree",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "CustomAlphaSights React component to create interactive D3 tree hierarchies. Based on bkrem/react-d3-tree.",
   "main": "lib/react-d3-tree.min.js",
   "types": "./react-d3-tree.d.ts",
