@@ -458,9 +458,11 @@ class Tree extends React.Component {
     const links = tree.links(nodes);
 
     let xDiff = 0;
+    let rootY = null;
     nodes.forEach(n => {
       if (n.inverted) {
-        n.y *= -1;
+        n.y *= 10;
+        rootY = n.y;
         const notInvertedNodes = n.parent.children.filter(child => !child.inverted);
         if (notInvertedNodes.length > 0) {
           const newX = notInvertedNodes[0].x;
@@ -468,7 +470,9 @@ class Tree extends React.Component {
           n.x = newX;
         }
       } else if (this.isChildOf(n, 'inverted', true)) {
-        n.y *= -2;
+        if (rootY !== null) {
+          n.y = rootY - n.y;
+        }
         n.x += xDiff;
       }
     });
