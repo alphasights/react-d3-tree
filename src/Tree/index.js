@@ -463,6 +463,7 @@ class Tree extends React.Component {
     let hiddenX = null;
     let hiddenY = null;
     let yDist = 50;
+    let shift = 0;
     nodes.forEach(n => {
       if (n.type === 'hidden') {
         hiddenX = n.x;
@@ -473,19 +474,26 @@ class Tree extends React.Component {
         yDist *= -1;
       }
       if (n.inverted) {
-        n.y *= 15;
+        n.y *= n.yMultiplier || 15;
         rootY = n.y;
         const notInvertedNodes = n.parent.children.filter(child => !child.inverted);
         if (notInvertedNodes.length > 0) {
           const newX = notInvertedNodes[0].x;
           xDiff = newX;
-          // n.x = newX;
         }
       } else if (this.isChildOf(n, 'inverted', true)) {
         if (rootY !== null) {
           n.y = rootY - n.y;
         }
         n.x += xDiff;
+      }
+
+      if (n.shift) {
+        n.y += n.shift;
+        // eslint-disable-next-line prefer-destructuring
+        shift = n.shift;
+      } else if (this.isChildOf(n, 'hasShift', true)) {
+        n.y += shift;
       }
     });
 
