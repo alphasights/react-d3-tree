@@ -264,29 +264,31 @@ class Tree extends React.Component {
    * @return {void}
    */
   handleNodeToggle = (nodeId, evt, isDoubleClick = false) => {
-    if (this.props.collapseOnDoubleClick && !isDoubleClick) return;
-
     const data = clone(this.state.data);
     const matches = this.findNodesById(nodeId, data, []);
     const targetNode = matches[0];
     // Persist the SyntheticEvent for downstream handling by users.
     evt.persist();
 
-    if (this.props.collapsible && !this.state.isTransitioning) {
-      if (targetNode._collapsed) {
-        Tree.expandNode(targetNode);
-        this.props.shouldCollapseNeighborNodes && this.collapseNeighborNodes(targetNode, data);
+    if ((this.props.collapseOnDoubleClick && isDoubleClick) || !this.props.collapseOnDoubleClick) {
+      if (this.props.collapsible && !this.state.isTransitioning) {
+        if (targetNode._collapsed) {
+          Tree.expandNode(targetNode);
+          this.props.shouldCollapseNeighborNodes && this.collapseNeighborNodes(targetNode, data);
+        } else {
+          Tree.collapseNode(targetNode);
+        }
+        // Lock node toggling while transition takes place
+        this.setState({ data, isTransitioning: true });
+        // Await transitionDuration + 10 ms before unlocking node toggling again
+        setTimeout(
+          () => this.setState({ isTransitioning: false }),
+          this.props.transitionDuration + 10,
+        );
+        this.internalState.targetNode = targetNode;
       } else {
-        Tree.collapseNode(targetNode);
+        this.handleOnClickCb(targetNode, evt);
       }
-      // Lock node toggling while transition takes place
-      this.setState({ data, isTransitioning: true }, () => this.handleOnClickCb(targetNode, evt));
-      // Await transitionDuration + 10 ms before unlocking node toggling again
-      setTimeout(
-        () => this.setState({ isTransitioning: false }),
-        this.props.transitionDuration + 10,
-      );
-      this.internalState.targetNode = targetNode;
     } else {
       this.handleOnClickCb(targetNode, evt);
     }
