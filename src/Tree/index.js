@@ -464,6 +464,7 @@ class Tree extends React.Component {
     let hiddenY = null;
     let yDist = 50;
     let shift = 0;
+    let xShift = 0;
     nodes.forEach(n => {
       if (n.type === 'hidden') {
         hiddenX = n.x;
@@ -488,12 +489,20 @@ class Tree extends React.Component {
         n.x += xDiff;
       }
 
-      if (n.shift) {
-        n.y += n.shift;
+      if (n.yShift) {
+        n.y += n.yShift;
         // eslint-disable-next-line prefer-destructuring
-        shift = n.shift;
-      } else if (this.isChildOf(n, 'hasShift', true)) {
+        shift = n.yShift;
+      } else if (this.isChildOf(n, 'propagateYShift', true)) {
         n.y += shift;
+      }
+
+      if (n.xShift) {
+        n.x += n.xShift;
+        // eslint-disable-next-line prefer-destructuring
+        xShift = n.xShift;
+      } else if (this.isChildOf(n, 'propagateXShift', true)) {
+        n.x += xShift;
       }
     });
 
