@@ -1,0 +1,129 @@
+{
+  "name": "react-d3-tree",
+  "version": "2.0.0-beta.0",
+  "description": "React component to create interactive D3 tree hierarchies",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "cp:css": "cd src && find . -name '*.css' | cpio -pdm ../dist && cd ..",
+    "build": "rimraf dist && yarn cp:css && tsc",
+    "build:watch": "rimraf dist && yarn cp:css && tsc -w",
+    "lint": "eslint src/**/*.js",
+    "test": "jest --coverage --verbose",
+    "test:clean": "rimraf ./coverage",
+    "test:watch": "jest --watchAll",
+    "test:cov": "jest --coverage --verbose",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "show:cov": "open coverage/lcov-report/index.html",
+    "docs:react": "react-docgen src -e src/**/*.test.js$|scripts/buildDocs.sh",
+    "docs": "yarn docs:react",
+    "docs:util": "jsdoc2md src/util/index.js > docs/util/util.md",
+    "docs:clean": "rimraf docs/components/* && rimraf docs/util/*",
+    "release": "yarn test && yarn build && yarn docs && git commit -a"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bkrem/react-d3-tree.git"
+  },
+  "keywords": [
+    "react",
+    "d3",
+    "tree",
+    "component",
+    "graph",
+    "svg",
+    "hierarchical-data",
+    "hierarchy",
+    "d3-visualization",
+    "chart"
+  ],
+  "author": "Ben Kremer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bkrem/react-d3-tree/issues"
+  },
+  "homepage": "https://github.com/bkrem/react-d3-tree",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint",
+      "prettier --write",
+      "jest --findRelatedTests",
+      "git add"
+    ],
+    "src/**/*.{ts,tsx}": [
+      "prettier --write",
+      "jest --findRelatedTests",
+      "git add"
+    ]
+  },
+  "greenkeeper": {
+    "ignore": [
+      "d3",
+      "react-transition-group"
+    ]
+  },
+  "dependencies": {
+    "clone": "^2.1.1",
+    "deep-equal": "^2.0.1",
+    "prop-types": "^15.5.10",
+    "react-lifecycles-compat": "^3.0.4",
+    "react-transition-group": "^4.3.0",
+    "uuid": "^3.0.1"
+  },
+  "peerDependencies": {
+    "d3": "^5.0.0",
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/d3": "^5.7.2",
+    "@types/react": "^16.9.17",
+    "@types/react-transition-group": "^4.2.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "coveralls": "^3.0.0",
+    "d3": "^5.15.0",
+    "enzyme": "^3.4.4",
+    "enzyme-adapter-react-16": "^1.2.0",
+    "eslint": "4.16.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.5.1",
+    "husky": "^3.0.4",
+    "jest": "^24.9.0",
+    "jsdoc-to-markdown": "^3.0.0",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.19.1",
+    "react": "^16.6.3",
+    "react-docgen": "^2.16.0",
+    "react-dom": "^16.6.3",
+    "react-test-renderer": "^16.6.3",
+    "regenerator-runtime": "^0.12.0",
+    "rimraf": "^3.0.0",
+    "rollup": "^0.68.2",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-babel": "3",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-postcss": "^1.6.3",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
+    "tsconfig-paths": "^3.8.0",
+    "typescript": "^3.6.2"
+  }
+}
